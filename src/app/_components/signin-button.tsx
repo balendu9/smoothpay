@@ -45,10 +45,15 @@ export const SigninButton: FC<SigninButtonProps> = ({ className, ...rest }) => {
         throw new Error('Invalid whoami response')
 
       // Fetch wallet id & address via api route to prevent 3x Passkey-signing
+      // const res = await axios.post<TurnkeyGetWalletAddressResponseSchema>(
+      //   '/api/turnkey/get-wallet-address',
+      //   { organizationId } satisfies TurnkeyGetWalletAddressRequestSchema,
+      // )
       const res = await axios.post<TurnkeyGetWalletAddressResponseSchema>(
         '/api/turnkey/get-wallet-address',
-        { organizationId } satisfies TurnkeyGetWalletAddressRequestSchema,
+        { organizationId } as TurnkeyGetWalletAddressRequestSchema
       )
+      
       const { walletAddress } = res.data
       if (!isHex(walletAddress)) throw new Error('Invalid wallet address')
 
